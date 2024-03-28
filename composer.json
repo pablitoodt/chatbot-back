@@ -1,0 +1,16 @@
+{
+    "name": "api/testautoload",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/",
+            "App\\Controllers\\": "src/controllers/"
+        }
+    },
+    "authors": [
+        {
+            "name": "pablitoodt",
+            "email": "pablodeteba@icloud.com"
+        }
+    ],
+    "require": {}
+}
