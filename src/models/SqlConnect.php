@@ -14,19 +14,23 @@ class SqlConnect {
 
   public function __construct() {
     $this->host = '127.0.0.1';
-    $this->port = '8889';
+    $this->port = '0000';
     $this->dbname = 'chatbot.io';
     $this->user = 'root';
-    $this->password = 'root';
+    $this->password = '';
 
-    $this->db = new PDO(
-      'mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->dbname,
-      $this->user,
-      $this->password
-    );
+    try {
+      $this->db = new PDO(
+        'mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->dbname,
+        $this->user,
+        $this->password
+      );
 
-    $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $this->db->setAttribute(PDO::ATTR_PERSISTENT, false);
+      $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $this->db->setAttribute(PDO::ATTR_PERSISTENT, false);
+    } catch (\PDOException $e) {
+      echo "Erreur de connexion : " . $e->getMessage();
+    }
   }
 
   public function transformDataInDot($data) {
