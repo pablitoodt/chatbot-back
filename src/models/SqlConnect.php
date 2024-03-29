@@ -14,10 +14,10 @@ class SqlConnect {
 
   public function __construct() {
     $this->host = '127.0.0.1';
-    $this->port = '0000';
+    $this->port = '8889';
     $this->dbname = 'chatbot.io';
     $this->user = 'root';
-    $this->password = '';
+    $this->password = 'root';
 
     try {
       $this->db = new PDO(

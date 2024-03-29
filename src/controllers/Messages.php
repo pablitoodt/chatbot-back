@@ -17,6 +17,11 @@ class Messages {
         $this->run();
     }
 
+    public function postMessage() {
+        $body = (array) json_decode(file_get_contents('php://input'));
+        $this->model->add($body);
+    }
+
     protected function getMessages() {
         return $this->model->get();
     }
