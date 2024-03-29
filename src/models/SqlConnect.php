@@ -11,13 +11,29 @@ class SqlConnect {
   private string $dbname;
   private string $password;
   private string $user;
+  protected string $system_info;
 
   public function __construct() {
-    $this->host = '127.0.0.1';
-    $this->port = '8889';
-    $this->dbname = 'chatbot.io';
-    $this->user = 'root';
-    $this->password = 'root';
+    $system_info = php_uname();
+    if (strpos($system_info, 'Windows') !== false) {
+      $this->host = '127.0.0.1';
+      $this->port = '3306';
+      $this->dbname = 'chatbot.io';
+      $this->user = 'root';
+      $this->password = '';
+    } elseif (strpos($system_info, 'Darwin') !== false) {
+      $this->host = '127.0.0.1';
+      $this->port = '8889';
+      $this->dbname = 'chatbot.io';
+      $this->user = 'root';
+      $this->password = 'root';
+    } else {
+      $this->host = '127.0.0.1';
+      $this->port = '3306';
+      $this->dbname = 'chatbot.io';
+      $this->user = 'root';
+      $this->password = '';
+    }
 
     try {
       $this->db = new PDO(
