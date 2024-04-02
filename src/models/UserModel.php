@@ -8,8 +8,8 @@ use stdClass;
 class UserModel extends SqlConnect {
     public function add(array $data) {
       $query = "
-        INSERT INTO users (first_name, last_name, promo, school)
-        VALUES (:firstname, :lastname, :promo, :school)
+        INSERT INTO users (name)
+        VALUES (:name)
       ";
 
       $req = $this->db->prepare($query);

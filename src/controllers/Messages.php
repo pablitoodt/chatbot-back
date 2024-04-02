@@ -17,9 +17,11 @@ class Messages {
         $this->run();
     }
 
-    public function postMessage() {
+    public function postMessages() {
         $body = (array) json_decode(file_get_contents('php://input'));
         $this->model->add($body);
+
+        return $this->model->getLast();
     }
 
     protected function getMessages() {
@@ -29,6 +31,8 @@ class Messages {
     protected function header() {
         header('Access-Control-Allow-Origin: *');
         header('Content-type: application/json; charset=utf-8');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
     }
 
     protected function ifMethodExist() {
@@ -51,6 +55,10 @@ class Messages {
 
     protected function run() {
         $this->header();
+        if ($this->reqMethod === 'options') {
+            header('HTTP/1.1 204 No Content');
+            exit;
+        }
         $this->ifMethodExist();
     }
 }
