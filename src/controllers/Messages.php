@@ -28,6 +28,10 @@ class Messages {
         return $this->model->get();
     }
 
+    protected function getYellowBotMessages() {
+        return $this->model->getYellow();
+    }
+
     protected function header() {
         header('Access-Control-Allow-Origin: *');
         header('Content-type: application/json; charset=utf-8');

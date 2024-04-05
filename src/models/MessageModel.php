@@ -31,6 +31,13 @@ class MessageModel extends SqlConnect {
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
   }
 
+  public function getYellow() {
+    $req = $this->db->prepare("SELECT * FROM messages");
+    $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
+  }
+
   public function getLast() {
     $req = $this->db->prepare("SELECT * FROM messages ORDER BY id DESC LIMIT 1");
     $req->execute();
