@@ -8,8 +8,8 @@ use stdClass;
 class MessageModel extends SqlConnect {
   public function add($data) {
     $query = "
-      INSERT INTO messages (type, name, content, botColor, day, time)
-      VALUES (?, ?, ?, ?, ?, ?)
+      INSERT INTO messages (type, name, content, botColor, day, time, api)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
     ";
 
     $req = $this->db->prepare($query);
@@ -20,7 +20,8 @@ class MessageModel extends SqlConnect {
       $data['content'],
       $data['botColor'],
       $data['day'],
-      $data['time']
+      $data['time'],
+      $data['api']
     ]);
   }
 
@@ -32,7 +33,21 @@ class MessageModel extends SqlConnect {
   }
 
   public function getYellow() {
-    $req = $this->db->prepare("SELECT * FROM messages");
+    $req = $this->db->prepare("SELECT * FROM messages WHERE api='meteo' OR botColor='yellow' OR api='hello'");
+    $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
+  }
+
+  public function getGreen() {
+    $req = $this->db->prepare("SELECT * FROM messages WHERE name='user'");
+    $req->execute();
+
+    return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();
+  }
+
+  public function getPink() {
+    $req = $this->db->prepare("SELECT * FROM messages WHERE api='alcool'");
     $req->execute();
 
     return $req->rowCount() > 0 ? $req->fetchAll(PDO::FETCH_ASSOC) : new stdClass();

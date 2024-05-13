@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Models\MessageModel;
+use App\Models\BotsModel;
 
-class Messages {
+class Bots {
     protected array $params;
     protected string $reqMethod;
     protected object $model;
@@ -13,31 +13,12 @@ class Messages {
         $this->params = $params;
         $this->reqMethod = strtolower($_SERVER['REQUEST_METHOD']);
 
-        $this->model = new MessageModel();
+        $this->model = new BotsModel();
         $this->run();
-    }
-
-    public function postMessages() {
-        $body = (array) json_decode(file_get_contents('php://input'));
-        $this->model->add($body);
-
-        return $this->model->getLast();
     }
 
     protected function getMessages() {
         return $this->model->get();
-    }
-
-    protected function getyellowBotMessages() {
-        return $this->model->getYellow();
-    }
-
-    protected function getgreenBotMessages() {
-        return $this->model->getGreen();
-    }
-
-    protected function getpinkBotMessages() {
-        return $this->model->getPink();
     }
 
     protected function header() {
@@ -47,12 +28,8 @@ class Messages {
         header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
     }
 
-    protected function ifMethodExist($test) {
-        if ($test === null){
-            $method = $this->reqMethod.'Messages';
-        } else{
-            $method = $this->reqMethod.$test.'Messages';
-        }
+    protected function ifMethodExist() {
+        $method = $this->reqMethod.'Messages';
 
         if (method_exists($this, $method)) {
         echo json_encode($this->$method());
@@ -75,6 +52,6 @@ class Messages {
             header('HTTP/1.1 204 No Content');
             exit;
         }
-        $this->ifMethodExist('');
+        $this->ifMethodExist();
     }
 }
