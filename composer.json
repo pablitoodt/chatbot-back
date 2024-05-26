@@ -1,5 +1,5 @@
 {
-    "name": "api/testautoload",
+    "name": "pablodeteba/chatbot-back",
     "autoload": {
         "psr-4": {
             "App\\": "src/",
